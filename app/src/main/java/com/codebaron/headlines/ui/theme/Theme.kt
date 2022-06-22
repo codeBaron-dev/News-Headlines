@@ -36,7 +36,7 @@ fun HeadlinesTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composa
     }
 
     MaterialTheme(
-        colors = colors,
+        colors = DarkColorPalette,
         typography = Typography,
         shapes = Shapes,
         content = content
