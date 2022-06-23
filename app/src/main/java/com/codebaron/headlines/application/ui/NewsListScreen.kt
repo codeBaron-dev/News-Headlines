@@ -41,7 +41,7 @@ import java.nio.charset.StandardCharsets
 
 /**
  * This composable function handles fetching news data either local or from network
- * It checks if local storage is empty and remote is available, if so it carries out
+ * It checks if local storage is empty and network is available, if so it carries out
  * the required action to get news headlines
  * @param navController
  * @param context
@@ -97,11 +97,7 @@ fun NewsListScreen(
                             val encodedUrl =
                                 URLEncoder.encode(headlines.url, StandardCharsets.UTF_8.toString())
                             if (!isNetworkAvailable(context)) {
-                                    Toast.makeText(
-                                        context,
-                                        NETWORK_ERROR,
-                                        Toast.LENGTH_LONG
-                                    ).show()
+                                    Toast.makeText(context, NETWORK_ERROR, Toast.LENGTH_LONG).show()
                             } else {
                                 navController.navigate("${DETAILS_SCREEN}/$encodedUrl")
                             }

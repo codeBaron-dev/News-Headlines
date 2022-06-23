@@ -6,9 +6,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -39,16 +36,9 @@ class MainActivity : ComponentActivity() {
                 Surface(color = MaterialTheme.colors.background) {
                     val navController = rememberNavController()
                     if (!isNetworkAvailable(this)) {
-                        Toast.makeText(
-                            this,
-                            DISCONNECTED,
-                            Toast.LENGTH_LONG
-                        ).show()
+                        Toast.makeText(this, DISCONNECTED, Toast.LENGTH_LONG).show()
                     }
-                    NavHost(
-                        navController = navController,
-                        startDestination = LIST_SCREEN,
-                    ) {
+                    NavHost(navController = navController, startDestination = LIST_SCREEN) {
                         composable(LIST_SCREEN) {
                             NewsListScreen(navController, this@MainActivity)
                         }
@@ -65,18 +55,5 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    HeadlinesTheme {
-        Greeting("Android")
     }
 }

@@ -9,8 +9,8 @@ const val BASE_URL = "https://newsapi.org/v2/"
 const val API_KEY = "2d021085c2e64c23927ff485d9f4299b"
 const val END_POINT = "top-headlines?apiKey=$API_KEY"
 
-const val APP_BAR_TITLE = "NewsFeeds"
-const val NETWORK_ERROR = "Network Error...Sorry can't load this news"
+const val APP_BAR_TITLE = "News Feeds"
+const val NETWORK_ERROR = "Ensure you have a stable internet connection to load this news"
 const val ERROR_LOADING_FROM_REMOTE = "error"
 const val DISCONNECTED = "Network Error, some content may not load properly"
 
