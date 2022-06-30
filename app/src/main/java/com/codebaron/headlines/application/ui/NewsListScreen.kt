@@ -14,8 +14,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -62,7 +60,6 @@ fun NewsListScreen(
     context: Context,
     viewModel: NewsViewModel = hiltViewModel()
 ) {
-    val isProgressBarVisible = remember { mutableStateOf(true)}
     val localNews = viewModel.getNewsFromLocalDatabase(context)
     // condition to decide where to get news headlines from(local or remote)
     if (localNews.isEmpty() && isNetworkAvailable(context)) {
