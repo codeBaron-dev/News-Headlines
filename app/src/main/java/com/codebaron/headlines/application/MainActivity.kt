@@ -20,10 +20,12 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.codebaron.headlines.Navigation.Destinations
 import com.codebaron.headlines.Navigation.Destinations.FAVOURITE_SCREEN
+import com.codebaron.headlines.Navigation.Destinations.SETTINGS_SCREEN
 import com.codebaron.headlines.Utilities.*
 import com.codebaron.headlines.application.ui.FavouritesNews
 import com.codebaron.headlines.application.ui.NewsDetails
 import com.codebaron.headlines.application.ui.NewsListScreen
+import com.codebaron.headlines.application.ui.SettingsScreen
 import com.codebaron.headlines.roomdb.NewsRoomDatabase
 import com.codebaron.headlines.ui.theme.HeadlinesTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -67,6 +69,7 @@ class MainActivity : ComponentActivity() {
             ScreenNavigation(navController = navController)
         }
     }
+
     @Composable
     fun ScreenNavigation(navController: NavHostController) {
         NavHost(navController = navController, startDestination = Destinations.LIST_SCREEN) {
@@ -84,6 +87,9 @@ class MainActivity : ComponentActivity() {
             }
             composable(FAVOURITE_SCREEN) {
                 FavouritesNews()
+            }
+            composable(SETTINGS_SCREEN) {
+                SettingsScreen()
             }
         }
     }
