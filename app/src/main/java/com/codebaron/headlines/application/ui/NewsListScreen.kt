@@ -27,7 +27,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.codebaron.headlines.R
 import com.codebaron.headlines.Utilities.Destinations.DETAILS_SCREEN
 import com.codebaron.headlines.Utilities.EMPTY_STRING
@@ -114,11 +115,13 @@ fun NewsListScreen(
                                 .fillMaxWidth()
                                 .fillMaxHeight()
                                 .aspectRatio(16f / 9f),
-                            painter = rememberImagePainter(data = headlines.urlToImage,
-                                builder = {
-                                    placeholder(R.drawable.newsicon)
-                                    error(R.drawable.newsicon)
-                                }),
+                            painter = rememberAsyncImagePainter(
+                                ImageRequest.Builder(LocalContext.current)
+                                    .data(data = headlines.urlToImage).apply(block = fun ImageRequest.Builder.() {
+                                        placeholder(R.drawable.newsicon)
+                                        error(R.drawable.newsicon)
+                                    }).build()
+                            ),
                             contentDescription = NEWS_THUMBNAIL,
                             contentScale = ContentScale.FillWidth
                         )
