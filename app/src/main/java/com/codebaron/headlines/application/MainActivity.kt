@@ -19,7 +19,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.codebaron.headlines.Navigation.Destinations
+import com.codebaron.headlines.Navigation.Destinations.FAVOURITE_SCREEN
 import com.codebaron.headlines.Utilities.*
+import com.codebaron.headlines.application.ui.FavouritesNews
 import com.codebaron.headlines.application.ui.NewsDetails
 import com.codebaron.headlines.application.ui.NewsListScreen
 import com.codebaron.headlines.roomdb.NewsRoomDatabase
@@ -79,6 +81,9 @@ class MainActivity : ComponentActivity() {
             ) { backStackEntry ->
                 backStackEntry.arguments?.getString(HEADLINE_URL)
                     ?.let { NewsDetails(it, this@MainActivity) }
+            }
+            composable(FAVOURITE_SCREEN) {
+                FavouritesNews()
             }
         }
     }
