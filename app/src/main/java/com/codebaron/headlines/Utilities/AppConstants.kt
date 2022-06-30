@@ -1,5 +1,7 @@
 package com.codebaron.headlines.Utilities
 
+import com.codebaron.headlines.Navigation.BottomNavigationItems
+
 /**
  * @author Nicholas Anyanwu
  * @since 22 Jun, 2022
@@ -30,3 +32,10 @@ const val HEADLINE_URL = "headlinesUrl"
 
 const val COUNTRY = "US"
 const val TEST_STRING = "test"
+
+const val FAVOURITE = "Favourite"
+const val SETTING = "Settings"
+const val NEWS_HEADLINE = "News Headlines"
+val NAVIGATION_OBJECTS = listOf(BottomNavigationItems.Headlines,
+    BottomNavigationItems.Favourites, BottomNavigationItems.Settings
+)

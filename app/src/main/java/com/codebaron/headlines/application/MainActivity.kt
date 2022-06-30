@@ -5,18 +5,21 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.foundation.Image
+import androidx.compose.material.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.codebaron.headlines.Utilities.DISCONNECTED
-import com.codebaron.headlines.Utilities.Destinations.DETAILS_SCREEN
-import com.codebaron.headlines.Utilities.Destinations.LIST_SCREEN
-import com.codebaron.headlines.Utilities.HEADLINE_URL
-import com.codebaron.headlines.Utilities.TEST_STRING
-import com.codebaron.headlines.Utilities.isNetworkAvailable
+import com.codebaron.headlines.Navigation.Destinations
+import com.codebaron.headlines.Utilities.*
 import com.codebaron.headlines.application.ui.NewsDetails
 import com.codebaron.headlines.application.ui.NewsListScreen
 import com.codebaron.headlines.roomdb.NewsRoomDatabase
@@ -47,21 +50,73 @@ class MainActivity : ComponentActivity() {
                     } else {
                         NewsRoomDatabase(this).NewsDao().deleteAll()
                     }
-                    NavHost(navController = navController, startDestination = LIST_SCREEN) {
-                        composable(LIST_SCREEN) {
-                            NewsListScreen(navController, this@MainActivity)
-                        }
-                        composable(
-                            "${DETAILS_SCREEN}/{$HEADLINE_URL}",
-                            arguments = listOf(navArgument(HEADLINE_URL) {
-                                defaultValue = TEST_STRING
-                            })
-                        ) { backStackEntry ->
-                            backStackEntry.arguments?.getString(HEADLINE_URL)
-                                ?.let { NewsDetails(it, this@MainActivity) }
+                    BottomNavBar(navController)
+                }
+            }
+        }
+    }
+
+
+    @Composable
+    fun BottomNavBar(navController: NavHostController) {
+        Scaffold(
+            bottomBar = { BottomNav(navController) }
+        ) {
+            ScreenNavigation(navController = navController)
+        }
+    }
+    @Composable
+    fun ScreenNavigation(navController: NavHostController) {
+        NavHost(navController = navController, startDestination = Destinations.LIST_SCREEN) {
+            composable(Destinations.LIST_SCREEN) {
+                NewsListScreen(navController, this@MainActivity)
+            }
+            composable(
+                "${Destinations.DETAILS_SCREEN}/{$HEADLINE_URL}",
+                arguments = listOf(navArgument(HEADLINE_URL) {
+                    defaultValue = TEST_STRING
+                })
+            ) { backStackEntry ->
+                backStackEntry.arguments?.getString(HEADLINE_URL)
+                    ?.let { NewsDetails(it, this@MainActivity) }
+            }
+        }
+    }
+
+    @Composable
+    fun BottomNav(navController: NavController) {
+        BottomNavigation {
+            val backStackEntry by navController.currentBackStackEntryAsState()
+            val currentRoute = backStackEntry?.destination?.route
+            NAVIGATION_OBJECTS.forEach { route ->
+                BottomNavigationItem(
+                    icon = {
+                        Image(
+                            painter = painterResource(id = route.icon),
+                            contentDescription = route.title
+                        )
+                    },
+                    label = {
+                        Text(
+                            text = route.title
+                        )
+                    },
+                    selectedContentColor = Color.White,
+                    unselectedContentColor = Color.White.copy(0.1f),
+                    alwaysShowLabel = true,
+                    selected = currentRoute == route.destinations,
+                    onClick = {
+                        navController.navigate(route.destinations) {
+                            navController.graph.startDestinationRoute?.let { screen_route ->
+                                popUpTo(screen_route) {
+                                    saveState = true
+                                }
+                            }
+                            launchSingleTop = true
+                            restoreState = true
                         }
                     }
-                }
+                )
             }
         }
     }

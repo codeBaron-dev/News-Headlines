@@ -1,4 +1,4 @@
-package com.codebaron.headlines.Utilities
+package com.codebaron.headlines.Navigation
 
 /**
  * @author Nicholas Anyanwu
@@ -8,4 +8,6 @@ package com.codebaron.headlines.Utilities
 object Destinations {
     const val LIST_SCREEN = "LIST_SCREEN"
     const val DETAILS_SCREEN = "DETAILS_SCREEN"
+    const val FAVOURITE_SCREEN = "FAVOURITE_SCREEN"
+    const val SETTINGS_SCREEN = "SETTINGS_SCREEN"
 }

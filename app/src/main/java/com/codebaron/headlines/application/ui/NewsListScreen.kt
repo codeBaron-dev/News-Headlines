@@ -30,7 +30,7 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.codebaron.headlines.R
-import com.codebaron.headlines.Utilities.Destinations.DETAILS_SCREEN
+import com.codebaron.headlines.Navigation.Destinations.DETAILS_SCREEN
 import com.codebaron.headlines.Utilities.EMPTY_STRING
 import com.codebaron.headlines.Utilities.NETWORK_ERROR
 import com.codebaron.headlines.Utilities.NEWS_THUMBNAIL
