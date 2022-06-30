@@ -7,12 +7,18 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
+import androidx.compose.material.Card
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -25,8 +31,11 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberImagePainter
 import com.codebaron.headlines.R
-import com.codebaron.headlines.Utilities.*
 import com.codebaron.headlines.Utilities.Destinations.DETAILS_SCREEN
+import com.codebaron.headlines.Utilities.EMPTY_STRING
+import com.codebaron.headlines.Utilities.NETWORK_ERROR
+import com.codebaron.headlines.Utilities.NEWS_THUMBNAIL
+import com.codebaron.headlines.Utilities.isNetworkAvailable
 import com.codebaron.headlines.model.DummyNews
 import com.codebaron.headlines.model.News
 import com.codebaron.headlines.ui.theme.HeadlinesTheme
@@ -53,35 +62,32 @@ fun NewsListScreen(
     context: Context,
     viewModel: NewsViewModel = hiltViewModel()
 ) {
+    val isProgressBarVisible = remember { mutableStateOf(true)}
     val localNews = viewModel.getNewsFromLocalDatabase(context)
     // condition to decide where to get news headlines from(local or remote)
     if (localNews.isEmpty() && isNetworkAvailable(context)) {
         val newsList by viewModel.getNewsHeadline(context).observeAsState(initial = emptyList())
-        NewsListScreen(navController, newsList)
+        NewsListScreen(navController, newsList, isProgressBarVisible = false)
     } else {
-        NewsListScreen(navController, localNews)
+        NewsListScreen(navController, localNews, isProgressBarVisible = false)
     }
 }
 
 @Composable
 fun NewsListScreen(
     navController: NavController,
-    news: List<News>
+    news: List<News>,
+    isProgressBarVisible: Boolean
 ) {
     val context = LocalContext.current
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(APP_BAR_TITLE) },
-            )
-        }
-    ) {
+    Scaffold {
         Box(
             Modifier
                 .padding(12.dp)
                 .fillMaxSize()
-                .padding(12.dp),
+                .padding(12.dp)
+                .alpha(if (isProgressBarVisible) 20f else 0f),
             contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator(color = Color.Gray)
@@ -97,7 +103,9 @@ fun NewsListScreen(
                             val encodedUrl =
                                 URLEncoder.encode(headlines.url, StandardCharsets.UTF_8.toString())
                             if (!isNetworkAvailable(context)) {
-                                    Toast.makeText(context, NETWORK_ERROR, Toast.LENGTH_LONG).show()
+                                Toast
+                                    .makeText(context, NETWORK_ERROR, Toast.LENGTH_LONG)
+                                    .show()
                             } else {
                                 navController.navigate("${DETAILS_SCREEN}/$encodedUrl")
                             }
@@ -140,7 +148,8 @@ fun NewsListPreview() {
     HeadlinesTheme {
         NewsListScreen(
             navController = rememberNavController(),
-            news = DummyNews.news
+            news = DummyNews.news,
+            isProgressBarVisible = false
         )
     }
 }

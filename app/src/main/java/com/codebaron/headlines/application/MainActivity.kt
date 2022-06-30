@@ -1,6 +1,7 @@
 package com.codebaron.headlines.application
 
 import android.os.Bundle
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -34,6 +35,11 @@ class MainActivity : ComponentActivity() {
             HeadlinesTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
+                    window.setFlags(
+                        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+                    )
+
                     val navController = rememberNavController()
                     if (!isNetworkAvailable(this)) {
                         Toast.makeText(this, DISCONNECTED, Toast.LENGTH_LONG).show()
