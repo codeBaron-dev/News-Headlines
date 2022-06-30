@@ -15,8 +15,8 @@ class NewsRepositoryImplementation @Inject constructor(private val newsProvider:
 
     private var news: List<News> = emptyList()
 
-    override suspend fun getNews(country: String): List<News> {
-        val newsApiResponse = newsProvider.getNewsFeeds(country).body()
+    override suspend fun getNews(): List<News> {
+        val newsApiResponse = newsProvider.getNewsFeeds(NEWS_TYPE, START_DATE, SORT_BY, API_KEY).body()
         if (newsApiResponse?.status == ERROR_LOADING_FROM_REMOTE) {
             when (newsApiResponse.code) {
                 API_MISSING_KEY -> throw MissingApiKeyException()

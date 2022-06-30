@@ -6,8 +6,11 @@ package com.codebaron.headlines.Utilities
  */
 
 const val BASE_URL = "https://newsapi.org/v2/"
-const val API_KEY = "2d021085c2e64c23927ff485d9f4299b"
-const val END_POINT = "top-headlines?apiKey=$API_KEY"
+const val API_KEY = "37effe73b6094b3f99ccc89bbc5d7ed6"
+const val END_POINT = "everything"
+const val NEWS_TYPE = "tesla"
+const val START_DATE = "2022-05-30"
+const val SORT_BY = "publishedAt"
 
 const val APP_BAR_TITLE = "News Feeds"
 const val NETWORK_ERROR = "Ensure you have a stable internet connection to load this news"

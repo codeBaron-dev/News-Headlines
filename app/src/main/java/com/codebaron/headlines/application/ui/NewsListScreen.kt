@@ -127,7 +127,7 @@ fun NewsListScreen(
                         )
                         Column(Modifier.padding(8.dp)) {
                             Text(
-                                headlines.content.toString(), fontSize = 14.sp,
+                                headlines.title, fontSize = 14.sp,
                                 fontWeight = FontWeight.Bold, maxLines = 2
                             )
                             Text(headlines.author ?: EMPTY_STRING, maxLines = 1, fontSize = 8.sp)

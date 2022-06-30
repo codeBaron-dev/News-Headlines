@@ -8,6 +8,6 @@ import com.codebaron.headlines.model.News
  */
 
 interface NewsRepository {
-    suspend fun getNews(country: String): List<News>
+    suspend fun getNews(): List<News>
     fun getNewsHeadlines(title: String): News
 }

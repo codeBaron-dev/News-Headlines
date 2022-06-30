@@ -19,6 +19,7 @@ import com.codebaron.headlines.Utilities.TEST_STRING
 import com.codebaron.headlines.Utilities.isNetworkAvailable
 import com.codebaron.headlines.application.ui.NewsDetails
 import com.codebaron.headlines.application.ui.NewsListScreen
+import com.codebaron.headlines.roomdb.NewsRoomDatabase
 import com.codebaron.headlines.ui.theme.HeadlinesTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -43,6 +44,8 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     if (!isNetworkAvailable(this)) {
                         Toast.makeText(this, DISCONNECTED, Toast.LENGTH_LONG).show()
+                    } else {
+                        NewsRoomDatabase(this).NewsDao().deleteAll()
                     }
                     NavHost(navController = navController, startDestination = LIST_SCREEN) {
                         composable(LIST_SCREEN) {

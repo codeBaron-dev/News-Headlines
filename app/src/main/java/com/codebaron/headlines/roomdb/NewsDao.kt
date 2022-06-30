@@ -19,4 +19,7 @@ interface NewsDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertAllNetworkNewsHeadlines(news: List<News>)
+
+    @Query("DELETE FROM headlines_table")
+    fun deleteAll()
 }

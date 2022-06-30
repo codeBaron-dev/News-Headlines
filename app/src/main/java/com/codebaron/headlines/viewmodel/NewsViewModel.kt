@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.codebaron.headlines.Utilities.COUNTRY
 import com.codebaron.headlines.model.News
 import com.codebaron.headlines.repository.NewsRepository
 import com.codebaron.headlines.roomdb.NewsRoomDatabase
@@ -25,7 +24,7 @@ class NewsViewModel @Inject constructor(private val newsRepository: NewsReposito
 
     fun getNewsHeadline(context: Context): LiveData<List<News>> {
         viewModelScope.launch(Dispatchers.IO) {
-            val news = newsRepository.getNews(COUNTRY)
+            val news = newsRepository.getNews()
             //cache new to local storage
             try {
                 val localDatabase = NewsRoomDatabase(context)

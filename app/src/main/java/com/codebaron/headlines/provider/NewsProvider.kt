@@ -14,5 +14,10 @@ import retrofit2.http.Query
 interface NewsProvider {
 
     @GET(END_POINT)
-    suspend fun getNewsFeeds(@Query("country") country: String): Response<NewsApiResponse>
+    suspend fun getNewsFeeds(
+        @Query("q", encoded = true) newType: String,
+        @Query("from", encoded = true) startDate: String,
+        @Query("sortBy", encoded = true) publishedAt: String,
+        @Query("apiKey", encoded = true) apiKey: String
+    ): Response<NewsApiResponse>
 }
